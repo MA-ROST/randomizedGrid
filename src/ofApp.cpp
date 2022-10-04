@@ -2,29 +2,13 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    pairs = GridIndex::randomXY();
     ofSetBackgroundColor(ofColor::white);
-    ofSetWindowTitle(TITLE); // Set the window title.
+    ofSetWindowTitle(TITLE); // Set the window title
     ofSetWindowShape(SCREEN_SIZE, SCREEN_SIZE);
     ofSetCircleResolution(80);
 
     ofNoFill();
-    
-    /*createCanvas(720, 360);
-    background(0);
-    noStroke();
-
-    let GRID_SIZE = 35;
-
-    for (let x = GRID_SIZE; x <= width - GRID_SIZE; x += GRID_SIZE) {
-        for (let y = GRID_SIZE; y <= height - GRID_SIZE; y += GRID_SIZE) {
-            noStroke();
-            fill(255);
-            rect(x - 1, y - 1, 3, 3);
-            stroke(255, 50);
-            line(x, y, width / 2, height / 2);
-        }
-    }*/
-
 }
 
 //--------------------------------------------------------------
@@ -34,17 +18,16 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(ofColor::black);
-    ofSetLineWidth(4);
-    for ( int x = 0; x < GRID_SIZE; ++x ) {
-        for ( int y = 0; y < GRID_SIZE; ++y ) {
-            ofDrawRectangle(SHAPE_PADDING + SHAPE_GRID * x, 
-                            SHAPE_PADDING + SHAPE_GRID * y, 
-                                SHAPE_SIZE, SHAPE_SIZE);
-
-            ofDrawCircle((SHAPE_PADDING*4.75) + SHAPE_GRID * x,
-                (SHAPE_PADDING * 4.75) + SHAPE_GRID * y,
-                            SHAPE_SIZE/3);
+    for ( int x = 0; x < GridIndex::GRID_SIZE; ++x ) {
+        for ( int y = 0; y < GridIndex::GRID_SIZE; ++y ) {
+            for ( auto pair : pairs ) {
+                if (x == pair.first && y == pair.second) {
+                    grid[x][y].drawShape(true,x, y);
+                }
+                else {
+                    grid[x][y].drawShape(false, x, y);
+                }
+            }
         }
     }
 }
@@ -71,23 +54,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    
-
-    int randCircle = ofRandom(1, 5);
-    cout << randCircle;
-    //int ranRow = 0;               // Variables for random locations
-    //int ranCol = 0;
-    //int bombCount = 0;
-    //for (int i = 0; i < numberOfBombs; i++) {   // Traverse all bombs
-    //    do {                                    // Loop while spot occupied
-    //        ranRow = numbers.random(0, rows - 1);       // Random row
-    //        ranCol = numbers.random(0, columns - 1);    // and column
-    //    } while (grid[ranRow][ranCol].getBomb());
-    //    grid[ranRow][ranCol].setBomb();
-    //    bombCount++;
-    //}
-
-
+    pairs.clear(); // Clear vector
+    pairs = GridIndex::randomXY(); // Get a random amount of random pairs
 }
 
 //--------------------------------------------------------------

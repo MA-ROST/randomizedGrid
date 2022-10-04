@@ -24,15 +24,12 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
 		const string TITLE = "Randomized Grid";
-		const int GRID_SIZE{ 8 };
-		const int SHAPE_SIZE {60};
-		const int SHAPE_PADDING{8};
-		const int SHAPE_GRID{ SHAPE_SIZE + SHAPE_PADDING };
 		
-		const int SCREEN_SIZE = SHAPE_PADDING + (SHAPE_GRID * GRID_SIZE);
+		const int SCREEN_SIZE = GridIndex::calculateScreenSize();
 
 
-		
+		const array<array<GridIndex, 8>, 8> grid;
+		vector<pair<int, int>> pairs;
 
 		//6*8=48
 		
